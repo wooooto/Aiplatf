@@ -1,0 +1,43 @@
+ <div class="aiplatf_header">
+
+      <div style="margin-left: 4rem; margin-top: 1rem; text-align: left;">
+          {% if not user.is_authenticated %}
+           <h1 class="aiplatf_header_logo">
+               <a href=" {% url 'accountapp:login' %}?next={{ request.path }}">
+                   AI Platform
+               </a>
+           </h1>
+          {% else %}
+          <h1 class="aiplatf_header_logo">
+               <a href=" {% url 'accountapp:hello_world' %}?next={{ request.path }}">
+                   AI Platform
+               </a>
+          </h1>
+          {% endif %}
+      </div>
+
+      <div style="margin: 0; text-align: center;" >
+          <h1>
+              ChatGPT
+          </h1>
+      </div>
+
+      <div class="aiplatf_header_button" style="margin-right: 4rem; text-align: right;">
+          {% if not user.is_authenticated %} <!-- 유저가 로그인이 되어 있지 않다면은  -->
+            <a href=" {% url 'accountapp:login' %}?next={{ request.path }}" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">
+              <span>login</span>  <!-- 우리가 만든 로그인 경로로 갈 수 있도록 만듬 -->
+            </a>
+            <a href=" {% url 'accountapp:create' %}" class="btn btn-secondary btn-lg active" role="button" aria-pressed="true">
+              <span>SignUp</span>
+            </a>
+          {% else %}
+            <a href=" {% url 'accountapp:detail' pk=user.pk %} " class="btn btn-primary btn-lg active" role="button" aria-pressed="true">
+              <span>MyPage</span>
+            </a>
+            <a href="{% url 'accountapp:logout' %}?next={{ request.path }}" class="btn btn-secondary btn-lg active" role="button" aria-pressed="true">
+              <span>logout</span>
+            </a>
+          {% endif %}
+
+      </div>
+ </div><div></div>

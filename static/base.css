@@ -1,0 +1,21 @@
+
+.aiplatf_header{
+    margin: 2rem 0;
+}
+
+.aiplatf_header_logo{
+    font-family: 'Shadows Into Light', cursive; float: center;
+}
+
+.aiplatf_header_button{
+    float: right;
+}
+
+
+.aiplatf_footer{
+    text-align: center; margin-top: 1.5rem;
+}
+
+.aiplatf_footer_logo{
+    margin-top: 1rem; font-family: 'Shadows Into Light', cursive;
+}
