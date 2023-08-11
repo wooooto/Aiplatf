@@ -1,32 +1,86 @@
-
 {% extends 'base.html' %}
+{% load bootstrap4 %}
 
 {% block content %}
+<style>
+    .link-container {
+        display: flex;
+        justify-content: space-between;
+        gap: 2.5rem;
+        margin: 2rem 0;
+    }
 
+    .link-card {
+        width: 100%;
+        position: relative;
+        background-color: #f0f4ff;
+        border-radius: 1rem;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    }
 
-    <div style="border-radius: 1rem; margin: 2rem; text-align: center;">
-          <h1 style="font-family: 'Shadows Into Light', cursive">
-            Talk to AI
-          </h1>
+    .link-card-bg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url('pattern.svg');
+        background-size: cover;
+        background-position: right bottom;
+        opacity: 0.1;
+        border-radius: 1rem;
+    }
 
-        <form action="/account/hello_world/" method="post">
-            {% csrf_token %}
-            <div>
-                <input type="text" name="hello_world_input">
-            </div>
-            <div style="margin-top: 1rem;">
-	        <input type="submit" class="btn btn-primary" value="POST">
-            </div>
-        </form>
+    .link-content {
+        padding: 1rem;
+    }
 
-        {% if hello_world_list %}
-            {% for hello_world in hello_world_list %}
+    .link-title {
+        font-weight: bold;
+        font-size: 1.25rem;
+    }
 
-            <h4>
-                {{ hello_world.text }}
-            </h4>
-            {% endfor %}
+    .link-description {
+        color: #6c757d;
+    }
+
+    .link-card:hover .link-title,
+    .link-card:hover .link-description {
+        color: #007bff;
+    }
+</style>
+
+<div class="link-container">
+    <a class="link-card" href="{% url 'articleapp:list' %}?next={{ request.path }}">
+        <div class="link-card-bg"></div>
+        <div class="link-content">
+            <div class="link-title">커뮤니티</div>
+        </div>
+    </a>
+    <div class="article-container">
+    <div class="link-container">
+        {% if article_list %}
+        {% for article in article_list %}
+            <a href="{% url 'articleapp:detail' pk=article.pk %}" class="article-card">
+                <h3>{{ article.title }}</h3>
+            </a>
+        {% endfor %}
+        {% else %}
+            <div class="no-articles">No Articles Yet!</div>
         {% endif %}
     </div>
+</div>
 
+    <a class="link-card" href="{% url 'askapp:asklist' %}?next={{ request.path }}">
+        <div class="link-card-bg"></div>
+        <div class="link-content">
+            <div class="link-title">Q&A</div>
+        </div>
+    </a>
+</div>
 {% endblock %}
+
+
+
+
+

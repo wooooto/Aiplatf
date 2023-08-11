@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+
+{% block content %}
+<style>
+    .chat-container {
+        max-width: 600px;
+        margin: 0 auto;
+    }
+    .chat-header {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    .chat-form {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+    .chat-input {
+        flex: 1;
+        margin-right: 10px;
+    }
+    .chat-btn {
+        flex-shrink: 0;
+    }
+    .chat-response {
+        border: 1px solid #ddd;
+        padding: 10px;
+        background-color: #f8f9fa;
+        border-radius: 5px;
+    }
+    .user-message {
+        color: #333;
+        font-weight: bold;
+    }
+    .bot-message {
+        color: #007bff;
+        font-weight: bold;
+    }
+</style>
+
+<div class="chat-container">
+    <div class="chat-header">
+        <h1>Chatbot</h1>
+    </div>
+    <div class="chat-form">
+        <input type="text" class="form-control chat-input" id="user-input" placeholder="Type your message...">
+        <button type="submit" class="btn btn-primary chat-btn">Send</button>
+    </div>
+    <div class="chat-response" id="chat-response">
+        <!-- Chatbot responses will appear here -->
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#chat-form').submit(function(event) {
+            event.preventDefault();
+            var user_input = $('#user-input').val();
+            $('#user-input').val('');
+
+            $.ajax({
+                type: 'POST',
+                url: '{% url "chatbotapp:chatbot" %}',
+                data: {
+                    'user_input': user_input,
+                    'csrfmiddlewaretoken': '{{ csrf_token }}'
+                },
+                success: function(response) {
+                    $('#chat-response').append('<p class="user-message">You: ' + user_input + '</p>');
+                    $('#chat-response').append('<p class="bot-message">Chatbot: ' + response.response + '</p>');
+                }
+            });
+        });
+    });
+</script>
+{% endblock %}

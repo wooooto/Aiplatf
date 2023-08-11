@@ -1,59 +1,77 @@
-
 {% extends 'base.html' %}
 
 {% block content %}
+<style>
+    .profile-container {
+        text-align: center;
+        max-width: 500px;
+        margin: 4rem auto;
+    }
+    .profile-img {
+        height: 15rem;
+        width: 15rem;
+        border-radius: 10rem;
+        margin-bottom: 2rem;
+    }
+    .profile-nickname {
+        font-family: 'MaruBuriBold.otf';
+    }
+    .profile-button {
+        display: inline-block;
+        margin-top: 1rem;
+        padding: 5px 10px;
+        font-size: 14px;
+        border-radius: 5px;
+        transition: background-color 0.3s;
+    }
+    .profile-button:hover {
+        background-color: #0056b3;
+        color: #fff;
+    }
+    .profile-message {
+        margin-bottom: 3rem;
+    }
+    .profile-change {
+        margin-top: 2rem;
+    }
+</style>
 
-<div>
-  <div style="text-align: center; max-width: 500px; margin: 4rem auto;">
-    <p>
-      {{ target_user.date_joined }}
-    </p>
-
-
+<div class="profile-container">
+    <p>{{ target_user.date_joined }}</p>
 
     {% if target_user.profile %}
-     <img src="{{ target_user.profile.image.url }}" alt=""
-         style="height: 15rem; width: 15rem; border-radius: 10rem; margin-bottom: 2rem;">
-    <h2 style="font-family: 'MaruBuriBold.otf'">
-      {{ target_user.profile.nickname }}
-      {% if target.user == user %}
-      <a href="{% url 'profileapp:update' pk=target_user.profile.pk %}">
-        edit
-      </a>
-      {% endif %}
+    <img src="{{ target_user.profile.image.url }}" alt="" class="profile-img">
+    <h2 class="profile-nickname">
+        {{ target_user.profile.nickname }}
+        {% if target_user == user %}
+        <a href="{% url 'profileapp:update' pk=target_user.profile.pk %}" class="profile-button">
+            Edit
+        </a>
+        {% endif %}
     </h2>
-    <h5 style="margin-bottom: 3rem;">
-      {{ target_user.profile.message }}
+    <h5 class="profile-message">
+        {{ target_user.profile.message }}
     </h5>
     {% else %}
-      {% if target.user == user %}
-      <a href="{% url 'profileapp:create' %}">
-        <h3 style="font-family: 'MaruBuriBold.otf'">
-            Create Profile
-        </h3>
-      </a>
-      {% else %}
-        <h2>
-          닉네임 미설정
-        </h2>
-      {% endif %}
+    {% if target_user == user %}
+    <a href="{% url 'profileapp:create' %}" class="profile-button">
+        Create Profile
+    </a>
+    {% else %}
+    <h2>
+        Nickname Not Set
+    </h2>
     {% endif %}
-
+    {% endif %}
 
     {% if target_user == user %}
-    <a href="{% url 'accountapp:create' pk=user.pk %}">
-      <p>
+    <a href="{% url 'accountapp:update' pk=user.pk %}" class="profile-button profile-change">
         Change Info
-      </p>
     </a>
-     <a href="{% url 'accountapp:delete' pk=user.pk %}">
-      <p>
+    <a href="{% url 'accountapp:delete' pk=user.pk %}" class="profile-button profile-change">
         Quit
-      </p>
     </a>
     {% endif %}
-
-  </div>
 </div>
-
 {% endblock %}
+

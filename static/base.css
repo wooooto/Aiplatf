@@ -1,6 +1,6 @@
 
 .aiplatf_header{
-    margin: 2rem 0;
+    justify-content: space-between; align-items: center; display: flex; width: 100%;
 }
 
 .aiplatf_header_logo{

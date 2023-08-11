@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+    .article-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+        justify-items: center;
+        margin: 20px auto;
+        padding: 0 20px;
+    }
+    .article-card {
+        border: 1px solid #ddd;
+        border-radius: 1rem;
+        padding: 1rem;
+        background-color: #f8f9fa;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s;
+    }
+    .article-card:hover {
+        transform: translateY(-5px);
+    }
+    .article-img {
+        width: 100%;
+        border-radius: 1rem;
+    }
+    .no-articles {
+        text-align: center;
+        margin-top: 2rem;
+        font-size: 1.5rem;
+    }
+    .create-article-btn {
+        display: inline-block;
+        margin-top: 1rem;
+        padding: 10px 20px;
+        background-color: #343a40;
+        color: #fff;
+        border: none;
+        border-radius: 1rem;
+        text-decoration: none;
+        font-size: 1rem;
+        transition: background-color 0.3s;
+    }
+    .create-article-btn:hover {
+        background-color: #23272b;
+    }
+</style>
+
+<div class="article-container">
+    {% if article_list %}
+        {% for article in article_list %}
+            <a href="{% url 'articleapp:detail' pk=article.pk %}" class="article-card">
+                <img src="{{ article.image.url }}" alt="{{ article.title }}" class="article-img">
+                <h3>{{ article.title }}</h3>
+            </a>
+        {% endfor %}
+    {% else %}
+        <div class="no-articles">No Articles Yet!</div>
+    {% endif %}
+</div>
+
+<div style="text-align: center;">
+    <a href="{% url 'articleapp:create' %}" class="create-article-btn">Create Article</a>
+</div>
+
+{% include 'snippets/pagination.html' with page_obj=page_obj %}
+{% endblock %}

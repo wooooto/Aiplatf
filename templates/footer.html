@@ -1,7 +1,6 @@
-  <div class="aiplatf_footer">
+  {% load static %}
 
-    <div style="margin: 1rem; text-align: center;">
-      <h2 class="aiplatf_logo">AI Platform</h2>
-    </div>
-
-  </div>
+    <div class="aiplatf_footer" style="text-align: center; margin: rem; cursor: pointer;" onclick="location.href=' {% url 'accountapp:hello_world' %}?next={{ request.path }}'">
+         <img src="{% static 'images/undenookpic.png' %}" alt="UndeNook" width="50" height="50"/>
+         <img src="{% static 'images/undenooklogo.png' %}" alt="UndeNook" width="150" height="50"/>
+     </div>

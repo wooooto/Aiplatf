@@ -1,43 +1,43 @@
- <div class="aiplatf_header">
+{% load static %}
+<div class="aiplatf_header" style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; background-color: #f8f9fa; border-bottom: 1px solid #e9ecef;">
 
-      <div style="margin-left: 4rem; margin-top: 1rem; text-align: left;">
-          {% if not user.is_authenticated %}
-           <h1 class="aiplatf_header_logo">
-               <a href=" {% url 'accountapp:login' %}?next={{ request.path }}">
-                   AI Platform
-               </a>
-           </h1>
-          {% else %}
-          <h1 class="aiplatf_header_logo">
-               <a href=" {% url 'accountapp:hello_world' %}?next={{ request.path }}">
-                   AI Platform
-               </a>
-          </h1>
-          {% endif %}
-      </div>
+    <div style="display: flex; align-items: center; cursor: pointer;" onclick="location.href='{% url 'accountapp:hello_world' %}?next={{ request.path }}'">
+        <span style="position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border-width: 0;">
+            UndeNook</span>
+        <img src="{% static 'images/undenookpic.png' %}" alt="UndeNook logo" width="50" height="50" style="margin-right: 10px;"/>
+        <img src="{% static 'images/undenooklogo.png' %}" alt="UndeNook logo" width="150" height="50"/>
+    </div>
 
-      <div style="margin: 0; text-align: center;" >
-          <h1>
-              ChatGPT
-          </h1>
-      </div>
+    <div style="display: flex; align-items: center; gap: 1rem;">
 
-      <div class="aiplatf_header_button" style="margin-right: 4rem; text-align: right;">
-          {% if not user.is_authenticated %} <!-- 유저가 로그인이 되어 있지 않다면은  -->
-            <a href=" {% url 'accountapp:login' %}?next={{ request.path }}" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">
-              <span>login</span>  <!-- 우리가 만든 로그인 경로로 갈 수 있도록 만듬 -->
-            </a>
-            <a href=" {% url 'accountapp:create' %}" class="btn btn-secondary btn-lg active" role="button" aria-pressed="true">
-              <span>SignUp</span>
-            </a>
-          {% else %}
-            <a href=" {% url 'accountapp:detail' pk=user.pk %} " class="btn btn-primary btn-lg active" role="button" aria-pressed="true">
-              <span>MyPage</span>
-            </a>
-            <a href="{% url 'accountapp:logout' %}?next={{ request.path }}" class="btn btn-secondary btn-lg active" role="button" aria-pressed="true">
-              <span>logout</span>
-            </a>
-          {% endif %}
+        <div class="novar" onclick="location.href='{% url 'chatbotapp:chatbot' %}?next={{ request.path }}'" style="font-size: 1.5rem; font-weight: 500; cursor: pointer;">
+            <a class="text-dark text-decoration-none">AI</a>
+        </div>
 
-      </div>
- </div><div></div>
+        <div class="novar" onclick="location.href='{% url 'articleapp:list' %}?next={{ request.path }}'" style="font-size: 1.5rem; font-weight: 500; cursor: pointer;">
+            <a class="text-dark text-decoration-none">커뮤니티</a>
+        </div>
+
+        <div class="novar" onclick="location.href='{% url 'askapp:asklist' %}?next={{ request.path }}'" style="font-size: 1.5rem; font-weight: 500; cursor: pointer;">
+            <a class="text-dark text-decoration-none">Q&amp;A</a>
+        </div>
+    </div>
+
+    <div class="aiplatf_header_button">
+        {% if not user.is_authenticated %}
+            <a href="{% url 'accountapp:login' %}?next={{ request.path }}" class="btn btn-primary btn-lg mr-2">
+                <span>로그인</span>
+            </a>
+            <a href="{% url 'accountapp:create' %}" class="btn btn-secondary btn-lg">
+                <span>회원가입</span>
+            </a>
+        {% else %}
+            <a href="{% url 'accountapp:detail' pk=user.pk %}" class="btn btn-primary btn-lg mr-2">
+                <span>마이페이지</span>
+            </a>
+            <a href="{% url 'accountapp:logout' %}?next={{ request.path }}" class="btn btn-secondary btn-lg">
+                <span>로그아웃</span>
+            </a>
+        {% endif %}
+    </div>
+</div>

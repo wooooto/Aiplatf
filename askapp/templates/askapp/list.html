@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+    .qa-container {
+        margin: 2rem auto;
+        padding: 0 20px;
+        max-width: 800px;
+    }
+    .qa-table {
+        width: 100%;
+        border-collapse: collapse;
+        border: 1px solid #ddd;
+        margin-top: 20px;
+    }
+    .qa-table th, .qa-table td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: center;
+    }
+    .qa-table th {
+        background-color: #f2f2f2;
+    }
+    .qa-button {
+        display: inline-block;
+        padding: 5px 10px;
+        font-size: 14px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        cursor: pointer;
+        border-radius: 5px;
+        transition: background-color 0.3s;
+    }
+    .qa-button:hover {
+        background-color: #0056b3;
+    }
+    .qa-write-button {
+        text-align: right;
+        margin-top: 10px;
+    }
+</style>
+
+<div class="qa-container">
+    <h2>Q&A 게시판</h2>
+    <div class="qa-write-button">
+        <a href="{% url 'askapp:askwrite' %}">
+            <button class="qa-button">글쓰기</button>
+        </a>
+    </div>
+    <table class="qa-table">
+        <tr>
+            <th>번호</th>
+            <th>제목</th>
+            <th>작성자</th>
+            <th>작성일</th>
+        </tr>
+        {% for post in posts %}
+        <tr>
+            <td>{{ forloop.counter }}</td>
+            <td><a href="{% url 'askapp:askdetail' post.pk %}">{{ post.title }}</a></td>
+            <td>{{ post.writer }}</td>
+            <td>{{ post.create_date|date:"Y년 m월 d일" }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endblock %}
